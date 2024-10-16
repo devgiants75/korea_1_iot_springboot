@@ -19,7 +19,7 @@ dependencies {
     // : 스프링부트 웹 관련 기능 제공 | 테스트 기능을 제공
     implementation('org.springframework.boot:spring-boot-starter-web')
     testImplementation('org.junit.jupiter:junit-jupiter:5.8.2')
-    testImplementation('org.assertj:assertj-core:3.24.2')
+    testImplementation('org.assertj:assertj-core:3.22.0')
 
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 

@@ -61,13 +61,33 @@ class TestControllerTest {
         Member savedMember = memberRepository.save(new Member(1L, "김다혜"));
 
         // when
+        // .perform() 메서드: 요청을 전송하는 역할
+        // - 결과를 ResultActions 객체로 받음
+        // - ResultActions 객체는 반환값을 검증하고 확인하는 andExpect() 메서드를 제공
         final ResultActions result = mockMvc.perform(get(url)
+                // .accept(): 요청을 보낼 때 무슨 타입으로 응답 받을지 결정하는 메서드
+                // - JSON, XML 등이 있음
                 .accept(MediaType.APPLICATION_JSON));
 
         // then
         result
+                // andExpect() 메서드: 응답을 검증
+                // - TestController에서 만든 API는 응답으로 OK(200)을 반환
+                // - .isOk() 메서드로 응답코드가 맞는지 확인
                 .andExpect(status().isOk())
-        .andExpect(jsonPath("$[0].id").value(savedMember.getId()))
-        .andExpect(jsonPath("$[0].name").value(savedMember.getName()));
+                // jsonPath("$[0].필드명")
+                // : JSON의 응답값을 가져오는 역할을 담당
+                // : 0번째 배열에 들어있는 객체의 id, name을 가져오고 저장된 값과 같은지 확인
+                .andExpect(jsonPath("$[0].id").value(savedMember.getId()))
+                .andExpect(jsonPath("$[0].name").value(savedMember.getName()));
     }
 }
+// HTTP 주요 응답 코드
+// 200 OK - isOk()
+// 201 Created - isCreated()
+// 400 Bad Request - isBadRequest()
+// 403 Forbidden - isForbidden()
+// 404 Not Found - isNotFound()
+// 400번대 응답 코드 - is4xxClientError()
+// 500 Internal Server Error - isInternalServerError()
+// 500번대 응답 코드 - is5xxServerError()

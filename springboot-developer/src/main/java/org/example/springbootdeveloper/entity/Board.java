@@ -6,13 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-enum Category {
-    NOTICE, // 공지사항
-    FREE, // 자유게시판
-    QNA, // 문의
-    EVENT // 이벤트
-}
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter

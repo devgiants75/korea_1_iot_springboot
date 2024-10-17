@@ -29,4 +29,6 @@ public class Board {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Category category;
+
+
 }

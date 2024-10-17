@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.springbootdeveloper.dto.request.BookRequestDto;
 import org.example.springbootdeveloper.dto.request.BookRequestUpdateDto;
 import org.example.springbootdeveloper.dto.response.BookResponseDto;
+import org.example.springbootdeveloper.entity.Category;
 import org.example.springbootdeveloper.service.BookService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +51,13 @@ public class BookController {
             @RequestParam String keyword
     ) {
         List<BookResponseDto> books = bookService.getBooksByTitleContaining(keyword);
+        return ResponseEntity.ok(books);
+    }
+
+    // 카테고리별 책 조회
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<BookResponseDto>> getBooksByCategory(@PathVariable Category category) {
+        List<BookResponseDto> books = bookService.getBooksByCategory(category);
         return ResponseEntity.ok(books);
     }
 

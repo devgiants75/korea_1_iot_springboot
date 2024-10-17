@@ -49,6 +49,14 @@ public class BookService {
         }
     }
 
+    // 3-1. 제목에 특정 단어가 포함된 책 조회
+    public List<BookResponseDto> getBooksByTitleContaining(String keyword) {
+        List<Book> books = bookRepository.findByTitleContaining(keyword);
+        return books.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
+
     // 4, 특정 ID 책 수정
     public BookResponseDto updateBook(Long id, BookRequestUpdateDto updateDto) {
         Book book = bookRepository.findById(id)

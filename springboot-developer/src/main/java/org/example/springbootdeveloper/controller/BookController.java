@@ -44,6 +44,15 @@ public class BookController {
         return ResponseEntity.ok(book);
     }
 
+    // 제목에 특정 단어가 포함된 책 조회
+    @GetMapping("/search/title")
+    public ResponseEntity<List<BookResponseDto>> getBooksByTitleContaining(
+            @RequestParam String keyword
+    ) {
+        List<BookResponseDto> books = bookService.getBooksByTitleContaining(keyword);
+        return ResponseEntity.ok(books);
+    }
+
     // 특정 id 책 수정
     @PutMapping("/{id}")
     public ResponseEntity<BookResponseDto> updateBook(

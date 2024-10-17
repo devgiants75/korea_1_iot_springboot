@@ -25,7 +25,7 @@ public class BookController {
 
     // 책 생성
     @PostMapping
-    public ResponseEntity<BookResponseDto> createdBook(@RequestBody BookRequestDto requestDto) {
+    public ResponseEntity<BookResponseDto> createBook(@RequestBody BookRequestDto requestDto) {
         BookResponseDto createdBook = bookService.createBook(requestDto);
         return ResponseEntity.ok(createdBook);
     }
@@ -46,7 +46,7 @@ public class BookController {
 
     // 특정 id 책 수정
     @PutMapping("/{id}")
-    public ResponseEntity<BookResponseDto> updatedBook(
+    public ResponseEntity<BookResponseDto> updateBook(
             @PathVariable Long id, @RequestBody BookRequestUpdateDto requestDto
     ) {
         BookResponseDto updatedBook = bookService.updateBook(id, requestDto);

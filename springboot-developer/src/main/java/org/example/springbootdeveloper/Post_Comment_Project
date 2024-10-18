@@ -18,7 +18,7 @@ Post_Comment_Project
 
 3. 댓글("Comment")
 - id: 댓글 고유 번호
-- board: 해당 댓글을 작성하는 게시글 정보(Board 클래스 타입)
+- board: 해당 댓글을 작성하는 게시글 정보(POST 클래스 타입)
 - content: 댓글 내용
 - commenter: 댓글 작성자
 

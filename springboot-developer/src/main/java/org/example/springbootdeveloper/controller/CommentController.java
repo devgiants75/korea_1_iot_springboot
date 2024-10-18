@@ -7,6 +7,8 @@ import org.example.springbootdeveloper.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/comments")
 public class CommentController {
@@ -31,7 +33,7 @@ public class CommentController {
     }
 
     @GetMapping("/post/{postId}")
-    public ResponseDto<CommentResponseDto> getCommentsByPost(@PathVariable Long postId) {
+    public ResponseDto<List<CommentResponseDto>> getCommentsByPost(@PathVariable Long postId) {
         return commentService.getCommentsByPost(postId);
     }
 
@@ -44,7 +46,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    public ResponseDto<CommentResponseDto> deleteComment(
+    public ResponseDto<Void> deleteComment(
             @PathVariable Long commentId
     ) {
         return commentService.deleteComment(commentId);

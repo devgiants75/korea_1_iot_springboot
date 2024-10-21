@@ -33,7 +33,21 @@ public class PostService {
     }
 
     public ResponseDto<List<PostResponseDto>> getAllPosts() {
-        return null;
+        try {
+            List<Post> posts = postRepository.findAll();
+            List<PostResponseDto> postResponseDtos = posts.stream()
+                    .map(this::convertToPostResponseDto)
+                    .collect(Collectors.toList());
+
+            if (postResponseDtos.isEmpty()) {
+                return ResponseDto.setFailed("등록된 게시글이 없습니다.");
+            }
+
+            return ResponseDto.setSuccess("게시글 목록 조회 성공", postResponseDtos);
+        } catch (Exception e) {
+            return ResponseDto.setFailed("");
+        }
+
     }
 
     public ResponseDto<PostResponseDto> getPostById(Long postId) {

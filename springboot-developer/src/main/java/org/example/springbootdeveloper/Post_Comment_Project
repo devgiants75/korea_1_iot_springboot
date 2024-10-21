@@ -54,3 +54,14 @@ repository (인터페이스 파일로 생성)
 service
 - PostService
 - CommentService
+
+==== 1021  수업 추가 자료 =====
+PostService 파일 하단
+>> convertToPostResponseDto
+
+CommentService 파일 하단
+>> convertToCommentResponseDto
+
++) CommentResponseDto
+	, PostResponseDto
+파일 내 @AllArgsConstructor 추가

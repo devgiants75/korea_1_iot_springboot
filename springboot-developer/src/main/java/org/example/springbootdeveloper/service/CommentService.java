@@ -3,6 +3,7 @@ package org.example.springbootdeveloper.service;
 import org.example.springbootdeveloper.dto.request.CommentRequestDto;
 import org.example.springbootdeveloper.dto.response.CommentResponseDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
+import org.example.springbootdeveloper.entity.Comment;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,5 +24,12 @@ public class CommentService {
 
     public ResponseDto<Void> deleteComment(Long commentId) {
         return null;
+    }
+
+    private CommentResponseDto convertToCommentResponseDto(Comment comment) {
+        return new CommentResponseDto(
+                comment.getId(), comment.getPost().getId(), comment.getContent()
+                , comment.getCommenter()
+        );
     }
 }

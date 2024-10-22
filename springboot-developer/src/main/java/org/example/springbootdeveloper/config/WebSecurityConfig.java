@@ -33,7 +33,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor // final 필드 | @NonNull 필드에 대해 생성자를 자동 생성
 public class WebSecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final @Lazy JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     // 정적 리소스나 특정 URL에 대해 Spring Security가 보안 검사를 무시하도록 설정

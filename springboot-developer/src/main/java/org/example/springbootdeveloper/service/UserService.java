@@ -56,7 +56,12 @@ public class UserService implements UserDetailsService {
             User user = userRepository.findByEmail(dto.getEmail())
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
+            // .matches(평문 비밀번호, 암호화된 비밀번호)
+            // : 평문 비밀번호와 암호화된 비밀번호를 비교하여 일치 여부를 반환
+            // : 일치할 경우 true
+            // : 일치하지 않을 경우 false
             if (!bCryptPasswordEncoder.matches(dto.getPassword(), user.getPassword())) {
+                // 일치하지 않은 경우(!false)
                 throw new RuntimeException("Invalid password");
             }
             return "로그인이 성공적으로 완료되었습니다.";

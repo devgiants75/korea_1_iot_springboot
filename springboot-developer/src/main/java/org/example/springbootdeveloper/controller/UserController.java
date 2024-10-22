@@ -43,6 +43,14 @@ public class UserController {
     // HTTP 메서드: POST
     // URI 경로: /login
     // - 로그인 로직: username, password
+
+    // cf) 로그인 시 HTTP 메서드 사용
+
+    // GET VS "POST"
+    // : POST 사용을 권장
+    // - 로그인 과정에서 사용자 이름과 비밀번호와 같은 민감한 데이터를 서버로 전송하기 때문
+    // - GET 요청을 URL에 데이터가 노출됨
+    //      : 데이터 조회에 사용
     @PostMapping("/login")
     public ResponseDto<String> login(@RequestBody UserLoginRequestDto dto) {
         try {

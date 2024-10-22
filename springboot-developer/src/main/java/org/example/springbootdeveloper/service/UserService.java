@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -37,6 +39,7 @@ public class UserService implements UserDetailsService {
             User user = User.builder()
                     .email(dto.getEmail())
                     .password(encodedPassword)
+                    .createdAt(LocalDateTime.now())
                     .build();
 
             userRepository.save(user);

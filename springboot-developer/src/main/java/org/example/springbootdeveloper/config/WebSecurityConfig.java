@@ -46,11 +46,24 @@ public class WebSecurityConfig {
     }
 
     @Bean
+    // CORS 정책
+    // : Cross Origin Resource Sharing
+    // >> 브라우저에서 다른 도메인(서버)으로부터 리소스를 요청할 때 발생하는 보안 정책
+    // >> REST API를 사용할 때 다른 출처(도메인)에서 API에 접근할 수 있도록 허용하는 정책
     public CorsFilter corsFilter() {
+        // CorsFilter
+        // : 특정 출처에서 온 HTTP 요청을 허용하거나 거부할 수 있는 필터
+        // : CORS 관련 설정을 필터링 해주는 역할
+
+        // UrlBasedCorsConfigurationSource
+        // : CORS 정책을 URL 기반으로 관리하는 객체
+        // > 특정 경로에 따라 CORS 정책을 달리 적용 가능
+        // > source를 통해 정책을 사용할 경로 지정
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // CORS 관련 세부 설정을 담는 클래스
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true); // 쿠키를 허용할지 여부
-        config.addAllowedOriginPattern("*"); // 모든 도메인 허용
+        config.setAllowCredentials(true); // 쿠키를 허용할지 여부 - 자격 증명을 포함한 요청 허용 여부
+        config.addAllowedOriginPattern("*"); // 모든 도메인(출처) 허용 - 어디서든지 요청 가능
         config.addAllowedHeader("*"); // 모든 헤더 허용
         config.addAllowedMethod("*"); // 모든 HTTP 메서드 허용 (GET, POST, PUT, DELETE 등)
         source.registerCorsConfiguration("/**", config); // 모든 경로에 대해 CORS 적용
@@ -87,7 +100,6 @@ public class WebSecurityConfig {
                 //      : 사이트 간 요청 위조의 줄임말
 
                 // csrf 공격을 방지하기 위해 활성화 하는 것을 권장
-
                 .build();
     }
 

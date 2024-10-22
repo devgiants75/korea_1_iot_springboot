@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 // final, non null 설정 된 필드를 필수 매개변수로 하는 생성자를 만드는 애너테이션
 @RequiredArgsConstructor
 public class UserController {

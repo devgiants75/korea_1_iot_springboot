@@ -91,4 +91,8 @@ public class JwtProvider {
 
         return userId; // JWT가 유효하다면 userId 반환
     }
+
+    public boolean isValidToken(String token) {
+        return true;
+    }
 }

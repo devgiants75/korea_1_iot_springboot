@@ -1,6 +1,7 @@
 package org.example.springbootdeveloper.config;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springbootdeveloper.filter.JwtAuthenticationFilter;
 import org.example.springbootdeveloper.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import org.springframework.web.cors.CorsConfiguration;
@@ -28,11 +30,10 @@ import static org.springframework.security.config.Customizer.withDefaults;
 // 웹 보안 구성(설정)
 @Configuration // 해당 클래스가 설정 클래스로 사용됨을 명시
 @EnableWebSecurity // Spring Security의 웹 보안을 활성화
-// @RequiredArgsConstructor // final 필드 | @NonNull 필드에 대해 생성자를 자동 생성
+@RequiredArgsConstructor // final 필드 | @NonNull 필드에 대해 생성자를 자동 생성
 public class WebSecurityConfig {
 
-    @Autowired
-    private @Lazy UserService userService;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     // 정적 리소스나 특정 URL에 대해 Spring Security가 보안 검사를 무시하도록 설정
@@ -98,6 +99,7 @@ public class WebSecurityConfig {
                 //      : 사이트 간 요청 위조의 줄임말
 
                 // csrf 공격을 방지하기 위해 활성화 하는 것을 권장
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

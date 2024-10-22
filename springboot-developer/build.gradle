@@ -28,9 +28,9 @@ dependencies {
     implementation('mysql:mysql-connector-java:8.0.33')
 
     // 스프링 시큐리티 사용 스타터
-    implementation('org.springframework.boot:spring-boot-starter-security')
+//    implementation('org.springframework.boot:spring-boot-starter-security')
     // 스프링 시큐리티 테스트를 위한 테스트 기능 제공
-    testImplementation('org.springframework.security:spring-security-test')
+//    testImplementation('org.springframework.security:spring-security-test')
 
     // 데이터베이스 h2 사용
     runtimeOnly('com.h2database:h2')

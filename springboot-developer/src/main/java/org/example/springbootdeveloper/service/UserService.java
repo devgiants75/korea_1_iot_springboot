@@ -51,7 +51,19 @@ public class UserService implements UserDetailsService {
     }
 
     public String login(UserLoginRequestDto dto) {
-        return null;
+        try {
+            // 해당 이메일의 유저가 있는지 검색하고 있을 경우 해당 데이터를 반환
+            User user = userRepository.findByEmail(dto.getEmail())
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+
+            if (!bCryptPasswordEncoder.matches(dto.getPassword(), user.getPassword())) {
+                throw new RuntimeException("Invalid password");
+            }
+            return "로그인이 성공적으로 완료되었습니다.";
+        } catch (Exception e) {
+            return "로그인에 실패하였습니다: " + e.getMessage();
+        }
+
     }
 
     @Override

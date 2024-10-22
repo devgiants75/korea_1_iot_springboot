@@ -82,9 +82,7 @@ public class WebSecurityConfig {
                                 // 특정 경로에 대한 엑세스 설정
                                 // .requestMatchers()
                                 //  : 특정 요청과 일치하는 url에 대한 엑세스
-                                new AntPathRequestMatcher("/login"),
-                                new AntPathRequestMatcher("/api/users/signup"),
-                                new AntPathRequestMatcher("/signup"),
+                                new AntPathRequestMatcher("/api/users/**"),
                                 new AntPathRequestMatcher("/user")
                         )
                         // .permitAll()

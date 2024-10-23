@@ -2,6 +2,7 @@ package org.example.springbootdeveloper.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.example.springbootdeveloper.common.constant.ResponseMessage;
 
 // @Data
 // : Lombok 라이브러리 애너테이션 (getter, setter, toString 등을 생성)

@@ -1,5 +1,6 @@
 package org.example.springbootdeveloper.service;
 
+import org.example.springbootdeveloper.common.constant.ResponseMessage;
 import org.example.springbootdeveloper.dto.request.PostRequestDto;
 import org.example.springbootdeveloper.dto.response.CommentResponseDto;
 import org.example.springbootdeveloper.dto.response.PostResponseDto;
@@ -25,7 +26,7 @@ public class PostService {
                     .author(dto.getAuthor())
                     .build();
             postRepository.save(post);
-            return ResponseDto.setSuccess("게시글이 정상적으로 등록되었습니다.", convertToPostResponseDto(post));
+            return ResponseDto.setSuccess(ResponseMessage.SUCCESS, convertToPostResponseDto(post));
         } catch (Exception e) {
             return ResponseDto.setFailed("게시글 등록 중 오류가 발생했습니다: " + e.getMessage());
         }
@@ -40,12 +41,12 @@ public class PostService {
                     .collect(Collectors.toList());
 
             if (postResponseDtos.isEmpty()) {
-                return ResponseDto.setFailed("등록된 게시글이 없습니다.");
+                return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_POST);
             }
 
-            return ResponseDto.setSuccess("게시글 목록 조회 성공", postResponseDtos);
+            return ResponseDto.setSuccess(ResponseMessage.SUCCESS, postResponseDtos);
         } catch (Exception e) {
-            return ResponseDto.setFailed("");
+            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
 
     }

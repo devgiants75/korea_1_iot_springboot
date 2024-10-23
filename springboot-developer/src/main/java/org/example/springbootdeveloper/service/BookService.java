@@ -1,9 +1,12 @@
 package org.example.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.example.springbootdeveloper.common.constant.ResponseMessage;
 import org.example.springbootdeveloper.dto.request.BookRequestDto;
 import org.example.springbootdeveloper.dto.request.BookRequestUpdateDto;
 import org.example.springbootdeveloper.dto.response.BookResponseDto;
+import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.entity.Book;
 import org.example.springbootdeveloper.entity.Category;
 import org.example.springbootdeveloper.repository.BookRepository;
@@ -19,14 +22,14 @@ public class BookService {
     private final BookRepository bookRepository;
 
     // 1. 게시글 생성(Post)
-    public BookResponseDto createBook(BookRequestDto requestDto) {
+    public ResponseDto<BookResponseDto> createBook(BookRequestDto requestDto) {
         Book book = new Book(
                 null, requestDto.getWriter(), requestDto.getTitle(),
                 requestDto.getContent(), requestDto.getCategory()
         );
 
         Book savedBook = bookRepository.save(book);
-        return convertToResponseDto(savedBook);
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, convertToResponseDto(savedBook));
     }
 
     // 2. 전체 책 조회

@@ -20,7 +20,7 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
 
-    public ResponseDto<MenuResponseDto> createMenu(MenuRequestDto dto) {
+    public ResponseDto<MenuResponseDto> createMenu(MenuRequestDto dto, Long registeredId) {
 
         MenuResponseDto data = null;
 
@@ -36,7 +36,7 @@ public class MenuService {
 
             menuRepository.save(menu);
 
-            data = new MenuResponseDto(menu);
+            data = new MenuResponseDto(menu, registeredId);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -8,6 +8,7 @@ import org.example.springbootdeveloper.entity.Menu;
 @NoArgsConstructor
 public class MenuResponseDto {
     private Long id;
+    private Long registeredId;
     private String name;
     private String description;
     private int price;
@@ -17,6 +18,7 @@ public class MenuResponseDto {
 
     public MenuResponseDto(Menu menu) {
         this.id = menu.getId();
+        this.registeredId = menu.getRegisteredId();
         this.name = menu.getName();
         this.description = menu.getDescription();
         this.price = menu.getPrice();

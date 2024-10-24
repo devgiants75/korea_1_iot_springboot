@@ -9,6 +9,7 @@ import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.service.MenuService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,14 +32,20 @@ public class MenuController {
     public static final String MENU_DELETE = "/{menuId}";
 
     @PostMapping(MENU_POST)
-    public ResponseEntity<ResponseDto<MenuResponseDto>> createMenu(@Valid @RequestBody MenuRequestDto dto) {
+    public ResponseEntity<ResponseDto<MenuResponseDto>> createMenu(
+            @Valid @RequestBody MenuRequestDto dto,
+            @AuthenticationPrincipal Long registeredId) {
         // @Valid
         // : 주로 메서드의 파라미터나 객체 필드의 유효성 검사를 위해 사용
         // : 객체 필드에 설정된 Bean Validation 제약조건 (@NotNull, @Min, @Size 등)을 검사
 
+        // @AuthenticationPrincipal
+        // : Spring Security의 인증 정보를 사용하는 애너테이션
+        // : Authentication 객체에서 Principal을 추출하여 컨트롤러 메서드로 주입하는 역할
+
         // - @Valid는 MenuRequestDto의 객체 필드에 설정된 유효성 제약 조건을 검사
 
-        ResponseDto<MenuResponseDto> result = menuService.createMenu(dto);
+        ResponseDto<MenuResponseDto> result = menuService.createMenu(dto, registeredId);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 

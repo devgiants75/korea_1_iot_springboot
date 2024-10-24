@@ -7,19 +7,12 @@ import org.example.springbootdeveloper.entity.Menu;
 @Data
 @NoArgsConstructor
 public class MenuResponseDto {
-    @Nonnull
     private Long id;
-    @Nonnull
     private String name;
-    @Nonnull
     private String description;
-    @Nonnull
     private int price;
-    @Nonnull
     private boolean isAvailable;
-    @Nonnull
     private String category;
-    @Nonnull
     private String size;
 
     public MenuResponseDto(Menu menu) {

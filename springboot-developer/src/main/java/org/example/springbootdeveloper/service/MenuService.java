@@ -20,13 +20,14 @@ public class MenuService {
 
     private final MenuRepository menuRepository;
 
-    public ResponseDto<MenuResponseDto> createMenu(MenuRequestDto dto, Long registeredId) {
+    public ResponseDto<MenuResponseDto> createMenu(MenuRequestDto dto, String userEmail) {
 
         MenuResponseDto data = null;
 
         try {
             Menu menu = Menu.builder()
                     .name(dto.getName())
+                    .userEmail(userEmail)
                     .description(dto.getDescription())
                     .price(dto.getPrice())
                     .isAvailable(dto.isAvailable())
@@ -36,7 +37,7 @@ public class MenuService {
 
             menuRepository.save(menu);
 
-            data = new MenuResponseDto(menu, registeredId);
+            data = new MenuResponseDto(menu);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -95,6 +96,31 @@ public class MenuService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
+    public ResponseDto<List<MenuResponseDto>> getMenuByCategory(String category) {
+        List<MenuResponseDto> data = null;
+        String menuCategory = category;
+
+        try  {
+            Optional<List<Menu>> optionalMenus = menuRepository.findByCategory(menuCategory);
+
+            if (optionalMenus.isPresent()) {
+                return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_DATA);
+            } else {
+                List<Menu> menus = optionalMenus.get();
+
+                data = menus.stream()
+                        .map((menu) -> new MenuResponseDto(menu))
+                        .collect(Collectors.toList());
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+        }
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
+
     public ResponseDto<MenuResponseDto> updateMenu(Long id, MenuRequestDto dto) {
         MenuResponseDto data = null;
         Long menuId = id;
@@ -143,4 +169,6 @@ public class MenuService {
             return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
         }
     }
+
+
 }

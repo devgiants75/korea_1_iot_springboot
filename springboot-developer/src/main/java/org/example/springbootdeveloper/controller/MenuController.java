@@ -25,7 +25,7 @@ public class MenuController {
 
     public static final String MENU_GET_MENU_ID = "/{menuId}";
     public static final String MENU_GET_LIST = "/list";
-    // public static final String MENU_GET_MENU_CATEGORY = "/{menuCategory}";
+    public static final String MENU_GET_MENU_CATEGORY = "/{menuCategory}";
 
     public static final String MENU_PUT = "/{menuId}";
 
@@ -34,7 +34,7 @@ public class MenuController {
     @PostMapping(MENU_POST)
     public ResponseEntity<ResponseDto<MenuResponseDto>> createMenu(
             @Valid @RequestBody MenuRequestDto dto,
-            @AuthenticationPrincipal Long registeredId) {
+            @AuthenticationPrincipal String userEmail) {
         // @Valid
         // : 주로 메서드의 파라미터나 객체 필드의 유효성 검사를 위해 사용
         // : 객체 필드에 설정된 Bean Validation 제약조건 (@NotNull, @Min, @Size 등)을 검사
@@ -45,7 +45,7 @@ public class MenuController {
 
         // - @Valid는 MenuRequestDto의 객체 필드에 설정된 유효성 제약 조건을 검사
 
-        ResponseDto<MenuResponseDto> result = menuService.createMenu(dto, registeredId);
+        ResponseDto<MenuResponseDto> result = menuService.createMenu(dto, userEmail);
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
@@ -58,6 +58,12 @@ public class MenuController {
     @GetMapping(MENU_GET_MENU_ID)
     public ResponseEntity<ResponseDto<MenuResponseDto>> getMenuById(@PathVariable Long id) {
         ResponseDto<MenuResponseDto> result = menuService.getMenuById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    @GetMapping(MENU_GET_MENU_CATEGORY)
+    public ResponseEntity<ResponseDto<List<MenuResponseDto>>> getMenuByCategory(@RequestParam String category) {
+        ResponseDto<List<MenuResponseDto>> result = menuService.getMenuByCategory(category);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

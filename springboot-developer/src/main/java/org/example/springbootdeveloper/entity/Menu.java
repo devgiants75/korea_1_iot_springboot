@@ -17,7 +17,7 @@ public class Menu {
     private Long id; // 메뉴 고유 ID
 
     @NotBlank
-    private Long registeredId; // 메뉴를 등록한 사람의 Id
+    private String userEmail; // 메뉴를 등록한 사람의 userEmail
 
     @Column(nullable = false, length = 255)
     private String name; // 메뉴명
@@ -38,10 +38,10 @@ public class Menu {
     private String size; // 메뉴 사이즈 - Regular 값을 기본값으로 설정
 
     @Builder
-    public Menu(String name, Long registeredId, String description, int price
+    public Menu(String name, String userEmail, String description, int price
             , boolean isAvailable, String category, String size) {
         this.name = name;
-        this.registeredId = registeredId;
+        this.userEmail = userEmail;
         this.description = description;
         this.price = price;
         this.isAvailable = isAvailable;

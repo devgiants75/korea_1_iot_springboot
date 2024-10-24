@@ -23,9 +23,9 @@ public class MenuController {
     // === MenuController mapping pattern 설정 ===
     public static final String MENU_POST = "/";
 
-    public static final String MENU_GET_MENU_ID = "/{menuId}";
+    public static final String MENU_GET_MENU_ID = "/{id}";
     public static final String MENU_GET_LIST = "/list";
-    public static final String MENU_GET_MENU_CATEGORY = "/{menuCategory}";
+    public static final String MENU_GET_MENU_CATEGORY = "/search/category";
 
     public static final String MENU_PUT = "/{menuId}";
 

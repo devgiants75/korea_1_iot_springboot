@@ -27,9 +27,9 @@ public class MenuController {
     public static final String MENU_GET_LIST = "/list";
     public static final String MENU_GET_MENU_CATEGORY = "/search/category";
 
-    public static final String MENU_PUT = "/{menuId}";
+    public static final String MENU_PUT = "/{id}";
 
-    public static final String MENU_DELETE = "/{menuId}";
+    public static final String MENU_DELETE = "/{id}";
 
     @PostMapping(MENU_POST)
     public ResponseEntity<ResponseDto<MenuResponseDto>> createMenu(
@@ -70,9 +70,10 @@ public class MenuController {
     @PutMapping(MENU_PUT)
     public ResponseEntity<ResponseDto<MenuResponseDto>> updateMenu(
             @PathVariable Long id,
+            @AuthenticationPrincipal String userEmail,
             @Valid @RequestBody MenuRequestDto dto
     ) {
-        ResponseDto<MenuResponseDto> result = menuService.updateMenu(id, dto);
+        ResponseDto<MenuResponseDto> result = menuService.updateMenu(id, userEmail, dto);
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 

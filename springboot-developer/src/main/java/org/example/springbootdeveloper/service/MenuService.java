@@ -121,15 +121,17 @@ public class MenuService {
         return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
     }
 
-    public ResponseDto<MenuResponseDto> updateMenu(Long id, MenuRequestDto dto) {
+    public ResponseDto<MenuResponseDto> updateMenu(Long id, String userEmail, MenuRequestDto dto) {
         MenuResponseDto data = null;
         Long menuId = id;
+        String email = userEmail;
 
         try {
             Optional<Menu> menuOptional = menuRepository.findById(menuId);
 
             if (menuOptional.isPresent()) {
                 Menu menu = Menu.builder()
+                        .userEmail(email)
                         .name(dto.getName())
                         .description(dto.getDescription())
                         .price(dto.getPrice())

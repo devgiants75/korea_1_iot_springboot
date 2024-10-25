@@ -17,7 +17,7 @@ import org.example.springbootdeveloper.common.constant.ApiMappingPattern;
 import org.example.springbootdeveloper.dto.request.UserSignInRequestDto;
 import org.example.springbootdeveloper.dto.request.UserSignUpRequestDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
-import org.example.springbootdeveloper.dto.response.UserLoginResponseDto;
+import org.example.springbootdeveloper.dto.response.UserSignInResponseDto;
 import org.example.springbootdeveloper.dto.response.UserSignUpResponseDto;
 import org.example.springbootdeveloper.service.AuthService;
 import org.springframework.http.HttpStatus;
@@ -63,9 +63,9 @@ public class AuthController {
     // - GET 요청을 URL에 데이터가 노출됨
     //      : 데이터 조회에 사용
     @PostMapping(POST_SIGN_IN)
-    public ResponseEntity<ResponseDto<UserLoginResponseDto>> signIn(@Valid @RequestBody UserSignInRequestDto dto) {
+    public ResponseEntity<ResponseDto<UserSignInResponseDto>> signIn(@Valid @RequestBody UserSignInRequestDto dto) {
         try {
-            ResponseDto<UserLoginResponseDto> result = authService.signIn(dto);
+            ResponseDto<UserSignInResponseDto> result = authService.signIn(dto);
             return ResponseEntity.status(HttpStatus.OK).body(result);
         } catch(Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);

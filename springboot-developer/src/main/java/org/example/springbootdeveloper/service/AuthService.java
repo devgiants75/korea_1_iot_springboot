@@ -70,6 +70,8 @@ public class AuthService {
         UserSignInResponseDto data = null;
         User user = null;
 
+        int exprTime = jwtProvider.getExpiration(); // 토큰 만료 시간 설정
+
         try {
             // 해당 이메일의 유저가 있는지 검색하고 있을 경우 해당 데이터를 반환
 
@@ -91,7 +93,7 @@ public class AuthService {
             // 인증 성공 후 JWT 토큰 생성
             String token = jwtProvider.generateJwtToken(email);
 
-            data = new UserSignInResponseDto(token, user);
+            data = new UserSignInResponseDto(token, user, exprTime);
             return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
 
         } catch (Exception e) {

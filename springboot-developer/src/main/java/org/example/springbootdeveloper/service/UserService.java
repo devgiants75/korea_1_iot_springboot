@@ -17,11 +17,5 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public ResponseDto<GetUserResponseDto> findUserByEmail(String email) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        GetUserResponseDto dto = new GetUserResponseDto(user);
-        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, dto);
-    }
 }

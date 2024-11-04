@@ -1,6 +1,10 @@
 package org.example.springbootdeveloper.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.springbootdeveloper.common.constant.ResponseMessage;
+import org.example.springbootdeveloper.dto.response.GetUserResponseDto;
+import org.example.springbootdeveloper.dto.response.ResponseDto;
+import org.example.springbootdeveloper.entity.User;
 import org.example.springbootdeveloper.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +16,12 @@ public class UserService {
     // , 기능 구현 후 응답을 Controller에게 전달
 
     private final UserRepository userRepository;
+
+    public ResponseDto<GetUserResponseDto> findUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        GetUserResponseDto dto = new GetUserResponseDto(user);
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, dto);
+    }
 }

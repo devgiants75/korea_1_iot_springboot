@@ -2,8 +2,13 @@ package org.example.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.springbootdeveloper.common.constant.ApiMappingPattern;
+import org.example.springbootdeveloper.dto.response.GetUserResponseDto;
+import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.service.UserService;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,7 +31,5 @@ public class UserController {
 
     // === UserController mapping pattern 설정 ===
 
-
-
-
+    
 }

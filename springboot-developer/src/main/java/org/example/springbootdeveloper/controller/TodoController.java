@@ -2,7 +2,9 @@ package org.example.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.springbootdeveloper.common.constant.ApiMappingPattern;
+import org.example.springbootdeveloper.dto.request.PostTodoRequestDto;
 import org.example.springbootdeveloper.dto.response.GetTodoListResponseDto;
+import org.example.springbootdeveloper.dto.response.PostTodoResponseDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.entity.Todo;
 import org.example.springbootdeveloper.service.TodoService;
@@ -41,29 +43,29 @@ public class TodoController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<ResponseDto<Todo>> createTodo(@RequestBody Todo todo) {
-        Todo createdTodo = todoService.createTodo(todo);
-        return ResponseEntity.ok(ResponseDto.setSuccess("Todo created successfully", createdTodo));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ResponseDto<Todo>> updateTodoStatus(@PathVariable Long id, @RequestBody Todo todo) {
-        Todo updatedTodo = todoService.updateTodoStatus(id, todo.isStatus());
-        if (updatedTodo != null) {
-            return ResponseEntity.ok(ResponseDto.setSuccess("Todo status updated successfully", updatedTodo));
-        } else {
-            return ResponseEntity.status(404).body(ResponseDto.setFailed("Todo not found"));
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ResponseDto<Void>> deleteTodoById(@PathVariable Long id) {
-        boolean isDeleted = todoService.deleteTodoById(id);
-        if (isDeleted) {
-            return ResponseEntity.ok(ResponseDto.setSuccess("Todo deleted successfully", null));
-        } else {
-            return ResponseEntity.status(404).body(ResponseDto.setFailed("Todo not found"));
-        }
-    }
+//    @PostMapping
+//    public ResponseEntity<ResponseDto<PostTodoResponseDto>> createTodo(@RequestBody PostTodoRequestDto dto) {
+//        Todo createdTodo = todoService.createTodo(dto);
+//        return ResponseEntity.ok(ResponseDto.setSuccess("Todo created successfully", createdTodo));
+//    }
+//
+//    @PutMapping("/{id}")
+//    public ResponseEntity<ResponseDto<Todo>> updateTodoStatus(@PathVariable Long id, @RequestBody Todo todo) {
+//        Todo updatedTodo = todoService.updateTodoStatus(id, todo.isStatus());
+//        if (updatedTodo != null) {
+//            return ResponseEntity.ok(ResponseDto.setSuccess("Todo status updated successfully", updatedTodo));
+//        } else {
+//            return ResponseEntity.status(404).body(ResponseDto.setFailed("Todo not found"));
+//        }
+//    }
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<ResponseDto<Void>> deleteTodoById(@PathVariable Long id) {
+//        boolean isDeleted = todoService.deleteTodoById(id);
+//        if (isDeleted) {
+//            return ResponseEntity.ok(ResponseDto.setSuccess("Todo deleted successfully", null));
+//        } else {
+//            return ResponseEntity.status(404).body(ResponseDto.setFailed("Todo not found"));
+//        }
+//    }
 }

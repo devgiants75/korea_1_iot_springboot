@@ -80,5 +80,17 @@ public class w_스프링시큐리티_보충 {
         6. getClaims
             토큰의 클레임 정보를 추출하여 반환
             JWT 본문에서 사용자 정보와 같은 세부 정보를 읽어옴
+
+        ================ JwtAuthenticationFilter ================
+        1. doFilterInternal
+            Authorization 헤더에서 JWT 토큰을 추출하여 검증
+            유효하지 않은 토큰은 필터 체인 다음 단계로 넘김
+            유효한 토큰일 경우 userId를 추출하여 인증 설정 메서드로 전달
+
+        2. setAuthenticationContext(인증 설정 메서드)
+            userId를 포함한 인증 토큰을 생성
+            요청에 대한 세부 정보를 인증 토큰에 설정
+            SecurityContextHolder에 사용자 인증 정보를 설정
+            , 이후의 요청에서 인증된 사용자로 인식되도록 함
     */
 }

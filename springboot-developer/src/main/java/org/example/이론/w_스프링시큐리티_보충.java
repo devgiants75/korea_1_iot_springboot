@@ -54,5 +54,31 @@ public class w_스프링시큐리티_보충 {
             보안 강화: 암호화된 비밀번호는 복호화할 수 없으므로 보안성이 높음
             Bean 등록: Spring에서 관리하는 Bean으로 등록되어 필요 시 자동으로 주입
 
+        ================ JwtProvider ================
+        1. generateJwtToken
+            사용자 ID를 포함하는 JWT를 생성하여 반환
+            현재 시간과 만료 시간 설정 및 HMAC-SHA256 서명 포함
+            사용자 인증에 활용되는 토큰
+
+        2. generateEmailValidToken
+            이메일 검증용으로 5분 동안 유효한 짧은 JWT를 생성
+            사용자 이름을 클레임으로 저장하며, 짧은 만료 시간으로 설정
+            이메일 인증 기능에 사용
+
+        3. removeBearer
+            Bearer 접두사를 제거하여 JWT만 반환
+            Authorization 헤더로부터 Bearer를 제거하는 데 사용
+
+        4. getUserIdFromJwt
+            JWT에서 사용자 ID 클레임을 추출해 반환
+            인증된 사용자를 특정하기 위한 정보로 사용
+
+        5. isValidToken
+            토큰의 유효성을 검사하여 true 또는 false를 반환
+            만료 여부와 올바른 형식인지 검증하는 역할 담당
+
+        6. getClaims
+            토큰의 클레임 정보를 추출하여 반환
+            JWT 본문에서 사용자 정보와 같은 세부 정보를 읽어옴
     */
 }

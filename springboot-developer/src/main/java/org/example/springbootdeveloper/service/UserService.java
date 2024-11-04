@@ -8,6 +8,8 @@ import org.example.springbootdeveloper.entity.User;
 import org.example.springbootdeveloper.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -18,4 +20,23 @@ public class UserService {
     private final UserRepository userRepository;
 
 
+    public ResponseDto<GetUserResponseDto> findUserByEmail(String userEmail) {
+        GetUserResponseDto data = null;
+
+        try {
+            Optional<User> userOptional = userRepository.findByEmail(userEmail);
+
+            if (userOptional.isPresent()) {
+                data = new GetUserResponseDto(userOptional.get());
+            } else {
+                return ResponseDto.setFailed(ResponseMessage.NOT_EXIST_DATA);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+        }
+
+        return ResponseDto.setSuccess(ResponseMessage.SUCCESS, data);
+    }
 }

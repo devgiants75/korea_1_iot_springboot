@@ -2,6 +2,7 @@ package org.example.springbootdeveloper.controller;
 
 import org.example.springbootdeveloper.common.constant.ApiMappingPattern;
 import org.example.springbootdeveloper.dto.request.PostRequestDto;
+import org.example.springbootdeveloper.dto.response.PagedResponseDto;
 import org.example.springbootdeveloper.dto.response.PostResponseDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.service.PostService;
@@ -26,10 +27,20 @@ public class PostController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+//    @GetMapping
+//    public ResponseDto<List<PostResponseDto>> getAllPosts() {
+//        return postService.getAllPosts();
+//    }
+
     @GetMapping
-    public ResponseDto<List<PostResponseDto>> getAllPosts() {
-        return postService.getAllPosts();
+    public ResponseEntity<ResponseDto<PagedResponseDto<PostResponseDto>>> getPosts(
+            @RequestParam int page,
+            @RequestParam int size) {
+
+        ResponseDto<PagedResponseDto<PostResponseDto>> result = postService.getPosts(page, size);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
 
     @GetMapping("/{postId}")
     public ResponseDto<PostResponseDto> getPostById(@PathVariable Long postId) {

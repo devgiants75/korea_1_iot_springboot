@@ -3,11 +3,14 @@ package org.example.springbootdeveloper.service;
 import org.example.springbootdeveloper.common.constant.ResponseMessage;
 import org.example.springbootdeveloper.dto.request.PostRequestDto;
 import org.example.springbootdeveloper.dto.response.CommentResponseDto;
+import org.example.springbootdeveloper.dto.response.PagedResponseDto;
 import org.example.springbootdeveloper.dto.response.PostResponseDto;
 import org.example.springbootdeveloper.dto.response.ResponseDto;
 import org.example.springbootdeveloper.entity.Post;
 import org.example.springbootdeveloper.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,6 +54,23 @@ public class PostService {
 
     }
 
+    public ResponseDto<PagedResponseDto<PostResponseDto>> getPosts(int page, int size) {
+        Page<Post> postPage = postRepository.findAll(PageRequest.of(page, size));
+
+        List<PostResponseDto> postDtos = postPage.getContent().stream()
+                .map(PostResponseDto::new)
+                .collect(Collectors.toList());
+
+        PagedResponseDto<PostResponseDto> pagedResponse = new PagedResponseDto<>(
+                postDtos,
+                postPage.getNumber(),
+                postPage.getTotalPages(),
+                postPage.getTotalElements()
+        );
+
+        return ResponseDto.setSuccess("게시글 목록 조회 성공", pagedResponse);
+    }
+
     public ResponseDto<PostResponseDto> getPostById(Long postId) {
         return null;
     }
@@ -73,4 +93,5 @@ public class PostService {
                 post.getId(), post.getTitle(), post.getContent(), post.getAuthor(), commentDtos
         );
     }
+
 }

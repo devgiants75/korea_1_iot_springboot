@@ -54,19 +54,56 @@ public class PostService {
 
     }
 
+    /*
+    getPosts
+        @Params: 페이지 번호, 페이지 크기
+        @return: ResponseDto - 성공 메시지와 페이징된 게시글 목록을 포함
+     */
     public ResponseDto<PagedResponseDto<PostResponseDto>> getPosts(int page, int size) {
-        Page<Post> postPage = postRepository.findAll(PageRequest.of(page, size));
 
-        List<PostResponseDto> postDtos = postPage.getContent().stream()
-                .map(PostResponseDto::new)
-                .collect(Collectors.toList());
+        PagedResponseDto<PostResponseDto> pagedResponse = null;
 
-        PagedResponseDto<PostResponseDto> pagedResponse = new PagedResponseDto<>(
-                postDtos,
-                postPage.getNumber(),
-                postPage.getTotalPages(),
-                postPage.getTotalElements()
-        );
+        try {
+            // page와 size 값을 사용해 PageRequest 객체를 생성
+            // : 해당 객체를 통해 DB에 해당 페이지의 Post 목록을 조회
+            // : 결과는 Page<Post> 타입으로 반환
+
+            /*
+                1. PageRequest: Pageable 인터페이스의 구현체
+                                - 특정 페이지의 데이터 조회 요청을 정의하는 객체
+                                - 페이지 번호와 크기(데이터 수)를 기반으로 페이징 요청을 설정
+
+                   EX) PageRequest.of(int page, int size)
+                        : page - 페이지 번호 (0부터 시작)
+                        : size - 한 페이지에 포함할 데이터의 개수
+                        PageRequest.of(2, 10)
+
+                2. Page<T>: JPA에서 제공하는 인터페이스
+                    , 특정 페이지에 대한 데이터와 페이징 정보를 포함한 객체
+                    - 조회된 데이터 목록뿐만 아니라 페이징과 관련된 메타정보도 함께 제공
+                    - 주요 메서드 -
+                        : getContent() - 현재 페이지 데이터 목록
+                        : getNumber() - 현재 페이지 번호 반환 (0부터 시작)
+                        : getSize() - 한 페이지에 포함된 데이터의 개수 반환
+                        : getTotalPages() - 전체 페이지 수 반환
+                        : getTotalElements() - 전체 데이터 수 반환
+            */
+            Page<Post> postPage = postRepository.findAll(PageRequest.of(page, size));
+
+            List<PostResponseDto> postDtos = postPage.getContent().stream()
+                    .map(PostResponseDto::new)
+                    .collect(Collectors.toList());
+
+            pagedResponse = new PagedResponseDto<>(
+                    postDtos,
+                    postPage.getNumber(), // 요청된 페이지 번호
+                    postPage.getTotalPages(), // 전체 페이지 수
+                    postPage.getTotalElements() // 전체 요소 수
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseDto.setFailed(ResponseMessage.DATABASE_ERROR);
+        }
 
         return ResponseDto.setSuccess("게시글 목록 조회 성공", pagedResponse);
     }

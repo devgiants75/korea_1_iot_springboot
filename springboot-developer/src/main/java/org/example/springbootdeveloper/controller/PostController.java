@@ -34,13 +34,19 @@ public class PostController {
 
     @GetMapping
     public ResponseEntity<ResponseDto<PagedResponseDto<PostResponseDto>>> getPosts(
+            // @RequestParam: url을 통해 key와 value 형태로 요청값을 보냄.
+            // page: 현재 페이지 번호, size: 페이지 당 표시할 데이터 개수
             @RequestParam int page,
             @RequestParam int size) {
-
-        ResponseDto<PagedResponseDto<PostResponseDto>> result = postService.getPosts(page, size);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        try {
+            // 요청한 페이지에 대한 데이터를 반환(응답)
+            ResponseDto<PagedResponseDto<PostResponseDto>> result = postService.getPosts(page, size);
+            return ResponseEntity.status(HttpStatus.OK).body(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-
 
     @GetMapping("/{postId}")
     public ResponseDto<PostResponseDto> getPostById(@PathVariable Long postId) {
